@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import Navbar from "../Navbar_page/Navbar";
+import Modal from "react-modal"
+import Register from "./Register";
 
-function Login() {
+function Login({isOpen ,onClose}) {
   const [username, setusername] = useState("");
   const [password, setpassword] = useState("");
+  const [isOpenregiter, setisopenregister]= useState(false)
 
   const onLoginclick = (e) => {
     e.preventDefault();
@@ -14,9 +16,29 @@ function Login() {
     };
     console.log(payload);
   };
+
+  const onClickregister = ()=> {
+    setisopenregister(true)
+    onClose()
+  
+  
+  }
+   const onCloseregister = ()=>{
+      setisopenregister(false)
+      
+   }
   return (
-    <>
-      <Navbar />
+  
+
+    <Modal
+     isOpen={isOpen}
+     onRequestClose={onClose}
+     className="flex items-center justify-center p-4"
+     overlayClassName="fixed inset-0 bg-black bg-opacity-50"
+      ariaHideApp={false}
+    
+  >
+     
       <div className="flex flex-col gap-4 justify-center items-center h-[100vh] bg-slate-400">
         <h1 className="text-[50px] font-serif">Login</h1>
         <form action="">
@@ -47,14 +69,18 @@ function Login() {
             </button>
             <p>
               Dont have a account{" "}
-              <NavLink to="/register">
-                <span className="text-red-500">register</span>
-              </NavLink>
+              
+                <span onClick={onClickregister} className="text-red-500">register</span>
+    
             </p>
           </div>
         </form>
       </div>
-    </>
+      {    isOpenregiter  &&  (<Register isOpen={isOpenregiter} onClose={onCloseregister}/>)}
+     
+      </Modal>
+      
+  
   );
 }
 
