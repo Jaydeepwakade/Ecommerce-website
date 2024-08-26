@@ -1,7 +1,7 @@
 
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import Home from "./components/Home";
+import Home from "./components/home/Home";
 import Login from "./components/Login_signup_pages/Login";
 
 
@@ -16,7 +16,7 @@ function App() {
      
     </Routes>
 
-    <Login/>
+   
     </>
   );
 }
