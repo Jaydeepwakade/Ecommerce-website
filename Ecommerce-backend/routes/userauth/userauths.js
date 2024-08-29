@@ -8,7 +8,7 @@ const usermodel = require("../../models/regesteruser.model")
 
 
 userRouter.post("/register", async (req, res) => {
-   const { firstname, lastname, email, password } = req.body
+   const { firstname, lastname, mobile, email, password } = req.body
 
    try {
       const hash = await bcrypt.hash(password, 10)
@@ -16,6 +16,7 @@ userRouter.post("/register", async (req, res) => {
       const newuser = new usermodel({
          firstname,
          lastname,
+         mobile,
          email,
          password: hash
       });
@@ -37,16 +38,16 @@ userRouter.post("/login", async (req, res) => {
    try {
       const user = await usermodel.findOne({ email })
       if (!user) {
-         res.status(500).json({ message: "user not found" })
+         res.status(400).json({ message: "user not found" })
       }
       const ismatch = await bcrypt.compare(password, user.password)
       if (!ismatch) {
-         res.status(500).json({ message: "invalid email or passowrd" })
+         res.status(400).json({ message: "invalid email or passowrd" })
       }
 
       const token = jwt.sign({ user_id: user._id, email: user.email }, process.env.JWT_SECRETKEY, { expiresIn: '1h' })
 
-      res.status(200).json({ token })
+      return res.status(200).json({ token })
 
    } catch (error) {
       console.log(error)

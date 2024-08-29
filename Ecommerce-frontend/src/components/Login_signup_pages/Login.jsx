@@ -1,27 +1,33 @@
 import React, { useState, useContext } from "react";
 import { Modalcontexts } from "../../contexts/modalcontext";
 import cancel from "../../assets/cancel.svg";
+import {useDispatch, useSelector} from "react-redux"
+import { LoginUser, RegisterUser } from "../../redux/actions/action";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [firstname, setFirstname] = useState("");
+  const [mobileno, setmobileNo] = useState("")
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
 
   const { ismodalopen, isloginform, openModal, closemodal, toggleform } =
     useContext(Modalcontexts);
+     const token = useSelector(state=>state.token)
+    const  dispatch = useDispatch()
 
   const onLoginClick = (e) => {
     e.preventDefault();
-    const payload = { username, password };
-    console.log(payload);
+    const payload = { email, password };
+    dispatch(LoginUser(payload,closemodal))
 
   };
 
   const onRegisterClick = (e) => {
     e.preventDefault();
-    const payload = { firstname, lastname, email, password };
+    const payload = { firstname, lastname, mobile:mobileno, email, password };
+    dispatch(RegisterUser(payload,toggleform))
     console.log(payload);
   };
 
@@ -50,8 +56,8 @@ function Login() {
                     </label>
                     <input
                       id="username"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       className="p-2 w-96   border border-gray-300 rounded-2xl h-14"
                       type="text"
                       placeholder="Enter your username"
@@ -124,8 +130,8 @@ function Login() {
                 <div className="flex flex-col w-1/2">
                   <input
                     id="mobile"
-                    value={lastname}
-                    onChange={(e) => setLastname(e.target.value)}
+                    value={mobileno}
+                    onChange={(e) => setmobileNo(e.target.value)}
                     className="p-2 text-2xl border w-96 h-16 border-gray-300 rounded-md"
                     type="text"
                     placeholder="Mobile"

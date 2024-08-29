@@ -1,7 +1,8 @@
 import authreducer from "./Loginreducer";
+import { combineReducers } from "redux";
 
 
-const rootreducer = combineRedcuers({
+const rootreducer = combineReducers({
     auth:authreducer
 })
 
