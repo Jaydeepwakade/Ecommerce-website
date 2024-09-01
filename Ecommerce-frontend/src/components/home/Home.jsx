@@ -6,6 +6,7 @@ import Glassesnavbar from '../Navbar_page/Glassesnavbar'
 import Imagebar from '../Navbar_page/Imagebar'
 import Desktopbanner from "../../assets/Desktopbanner.png"
 import BannerSlider from '../imageslider/BannerSlider'
+import Footer from '../footer/Footer'
 
 function Home() {
   return (
@@ -17,6 +18,7 @@ function Home() {
           <img src={Desktopbanner} alt="" />
         </div>
         <BannerSlider/>
+        <Footer/>
         <Login/>
         <Outlet/>
        
